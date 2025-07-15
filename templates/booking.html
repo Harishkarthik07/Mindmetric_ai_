@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Book a Session - MindMetric AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <i class="bi bi-calendar-event text-primary me-2"></i>
+                    Book a Psychology Session
+                </h2>
+                <p class="text-muted mb-0">Schedule your consultation with Meghana KS, Licensed Psychologist</p>
+            </div>
+            <div class="card-body">
+                <!-- Psychologist Info -->
+                <div class="row mb-4">
+                    <div class="col-md-3 text-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                            <i class="bi bi-person-badge display-4 text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h4>Meghana KS</h4>
+                        <p class="text-muted">Licensed Clinical Psychologist</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle text-success me-2"></i>10+ years of experience</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Specialized in stress management and anxiety</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Cognitive Behavioral Therapy (CBT) certified</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Telehealth and in-person sessions available</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Booking Form -->
+                <form method="POST" action="{{ url_for('submit_booking') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="date" class="form-label">
+                                    <i class="bi bi-calendar3 me-2"></i>Preferred Date
+                                </label>
+                                <input type="date" class="form-control" id="date" name="date" required 
+                                       min="{{ (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d') }}"
+                                       max="{{ (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d') }}">
+                                <div class="form-text">Sessions can be scheduled 1-60 days in advance</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="time" class="form-label">
+                                    <i class="bi bi-clock me-2"></i>Preferred Time
+                                </label>
+                                <select class="form-select" id="time" name="time" required>
+                                    <option value="">Select a time slot</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">
+                            <i class="bi bi-chat-left-text me-2"></i>Additional Notes (Optional)
+                        </label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" 
+                                  placeholder="Any specific concerns or topics you'd like to discuss?"></textarea>
+                    </div>
+
+                    <!-- Session Details -->
+                    <div class="alert alert-info">
+                        <h6><i class="bi bi-info-circle me-2"></i>Session Details</h6>
+                        <ul class="mb-0">
+                            <li><strong>Duration:</strong> 50 minutes</li>
+                            <li><strong>Format:</strong> Video call or in-person (to be confirmed)</li>
+                            <li><strong>Fee:</strong> $120 per session</li>
+                            <li><strong>Cancellation:</strong> 24-hour notice required</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-calendar-check me-2"></i>Book My Session
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Emergency Contact -->
+                <div class="alert alert-danger mt-4">
+                    <h6><i class="bi bi-exclamation-triangle me-2"></i>Crisis Support</h6>
+                    <p class="mb-0">
+                        If you're experiencing a mental health crisis, please contact:
+                        <br><strong>National Suicide Prevention Lifeline:</strong> 988
+                        <br><strong>Crisis Text Line:</strong> Text HOME to 741741
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date to tomorrow
+    const dateInput = document.getElementById('date');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+    
+    // Set maximum date to 60 days from now
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 60);
+    dateInput.max = maxDate.toISOString().split('T')[0];
+});
+</script>
+{% endblock %}

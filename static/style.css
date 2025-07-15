@@ -1,0 +1,208 @@
+/* Custom styles for MindMetric AI */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    color: var(--bs-primary);
+}
+
+/* Hero section */
+.display-1, .display-4, .display-5 {
+    font-weight: 700;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    border-radius: 1rem 1rem 0 0 !important;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Forms */
+.form-control, .form-select {
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+}
+
+.btn-success {
+    background: var(--success-gradient);
+    border: none;
+}
+
+.btn-warning {
+    background: var(--warning-gradient);
+    border: none;
+}
+
+/* Quiz specific styles */
+.question-group {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--bs-primary);
+}
+
+.question-group label.form-label {
+    color: var(--bs-primary);
+    margin-bottom: 0.75rem;
+}
+
+.form-check-label {
+    cursor: pointer;
+    padding-left: 0.5rem;
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+
+/* Progress bar */
+.progress {
+    height: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    background: var(--primary-gradient);
+    transition: width 0.6s ease;
+}
+
+/* Result page styles */
+.badge.fs-1 {
+    font-size: 3rem !important;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+}
+
+.display-6 {
+    font-size: 2.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-1 {
+        font-size: 2.5rem;
+    }
+    
+    .display-4 {
+        font-size: 1.8rem;
+    }
+    
+    .display-5 {
+        font-size: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .question-group {
+        padding: 0.75rem;
+    }
+}
+
+/* Loading animation */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Alert enhancements */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.alert-info {
+    background: rgba(13, 202, 240, 0.1);
+    color: var(--bs-info);
+}
+
+.alert-success {
+    background: rgba(25, 135, 84, 0.1);
+    color: var(--bs-success);
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--bs-warning);
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--bs-danger);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Print styles */
+@media print {
+    .navbar, .btn, .alert-warning:last-child {
+        display: none !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .card-header {
+        background: #f8f9fa !important;
+        color: #000 !important;
+    }
+}
