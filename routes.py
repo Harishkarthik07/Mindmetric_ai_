@@ -145,7 +145,8 @@ def result(assessment_id):
 @app.route('/book')
 @login_required
 def booking():
-    return render_template('booking.html')
+    from datetime import datetime, timedelta
+    return render_template('booking.html', datetime=datetime, timedelta=timedelta)
 
 @app.route('/submit_booking', methods=['POST'])
 @login_required

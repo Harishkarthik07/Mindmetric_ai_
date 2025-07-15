@@ -5,6 +5,16 @@
     --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
+/* Ensure dark theme consistency */
+html[data-bs-theme="dark"] {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
+
 /* Navigation */
 .navbar-brand {
     font-weight: 700;
@@ -22,36 +32,48 @@
 
 /* Cards */
 .card {
-    border: none;
+    border: 1px solid var(--bs-border-color);
     border-radius: 1rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
 }
 
 .card-header {
     border-radius: 1rem 1rem 0 0 !important;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--bs-border-color);
+    background-color: var(--bs-secondary-bg);
 }
 
 /* Forms */
 .form-control, .form-select {
     border-radius: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
 }
 
 .form-control:focus, .form-select:focus {
     border-color: var(--bs-primary);
     box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
 }
 
 .form-check-input:checked {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
+}
+
+.input-group-text {
+    background-color: var(--bs-secondary-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
 }
 
 /* Buttons */
@@ -68,16 +90,48 @@
 .btn-primary {
     background: var(--primary-gradient);
     border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-gradient);
+    opacity: 0.9;
+    color: white;
 }
 
 .btn-success {
     background: var(--success-gradient);
     border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--success-gradient);
+    opacity: 0.9;
+    color: white;
 }
 
 .btn-warning {
     background: var(--warning-gradient);
     border: none;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: var(--warning-gradient);
+    opacity: 0.9;
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-color: var(--bs-secondary);
+    color: var(--bs-secondary);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+    color: white;
 }
 
 /* Quiz specific styles */
@@ -162,27 +216,39 @@
 /* Alert enhancements */
 .alert {
     border-radius: 0.5rem;
-    border: none;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-secondary-bg);
+    color: var(--bs-body-color);
 }
 
 .alert-info {
-    background: rgba(13, 202, 240, 0.1);
-    color: var(--bs-info);
+    background: rgba(13, 202, 240, 0.15);
+    color: #0dcaf0;
+    border-color: rgba(13, 202, 240, 0.3);
 }
 
 .alert-success {
-    background: rgba(25, 135, 84, 0.1);
-    color: var(--bs-success);
+    background: rgba(25, 135, 84, 0.15);
+    color: #198754;
+    border-color: rgba(25, 135, 84, 0.3);
 }
 
 .alert-warning {
-    background: rgba(255, 193, 7, 0.1);
-    color: var(--bs-warning);
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border-color: rgba(255, 193, 7, 0.3);
 }
 
 .alert-danger {
-    background: rgba(220, 53, 69, 0.1);
-    color: var(--bs-danger);
+    background: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.3);
+}
+
+.alert-light {
+    background: var(--bs-secondary-bg);
+    color: var(--bs-body-color);
+    border-color: var(--bs-border-color);
 }
 
 /* Footer */
