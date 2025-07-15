@@ -32,37 +32,70 @@ body {
 
 /* Cards */
 .card {
-    border: 1px solid var(--bs-border-color);
+    border: 1px solid rgba(102, 126, 234, 0.2);
     border-radius: 1rem;
-    background-color: var(--bs-body-bg);
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
     transition: all 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 .card-header {
     border-radius: 1rem 1rem 0 0 !important;
-    border-bottom: 2px solid var(--bs-border-color);
-    background-color: var(--bs-secondary-bg);
+    border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+    background: linear-gradient(135deg, var(--primary-gradient));
+    color: white;
+    font-weight: 600;
+}
+
+/* Special styling for login/signup cards */
+.auth-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 250, 0.98));
+    border: 2px solid rgba(102, 126, 234, 0.3);
+}
+
+.auth-card .card-body {
+    padding: 2rem;
+}
+
+/* Quiz card styling */
+.quiz-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 242, 247, 0.95));
+}
+
+.quiz-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.quiz-card .card-body {
+    color: #212529;
 }
 
 /* Forms */
 .form-control, .form-select {
     border-radius: 0.5rem;
-    border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #212529;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
 }
 
 .form-control:focus, .form-select:focus {
     border-color: var(--bs-primary);
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
+    box-shadow: 0 0 0 0.3rem rgba(102, 126, 234, 0.2);
+    background-color: #ffffff;
+    color: #212529;
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 0.8;
 }
 
 .form-check-input:checked {
@@ -71,9 +104,37 @@ body {
 }
 
 .input-group-text {
-    background-color: var(--bs-secondary-bg);
-    border-color: var(--bs-border-color);
-    color: var(--bs-body-color);
+    background-color: rgba(102, 126, 234, 0.1);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: var(--bs-primary);
+    font-weight: 600;
+    border-width: 2px;
+}
+
+/* Enhanced form labels */
+.form-label {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Text improvements for better visibility */
+.text-dark-readable {
+    color: #212529 !important;
+}
+
+.quiz-card .card-body .form-text {
+    color: #6c757d !important;
+}
+
+.quiz-card .card-body h4 {
+    color: #495057 !important;
+    font-weight: 600;
+}
+
+.quiz-card .card-body p {
+    color: #6c757d !important;
 }
 
 /* Buttons */
@@ -136,25 +197,33 @@ body {
 
 /* Quiz specific styles */
 .question-group {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
     border-left: 4px solid var(--bs-primary);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .question-group label.form-label {
-    color: var(--bs-primary);
-    margin-bottom: 0.75rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 .form-check-label {
     cursor: pointer;
-    padding-left: 0.5rem;
+    padding-left: 0.75rem;
+    color: #e9ecef;
+    font-weight: 500;
+    line-height: 1.6;
 }
 
 .form-check-input {
     cursor: pointer;
+    margin-top: 0.3rem;
 }
 
 /* Progress bar */
@@ -173,10 +242,42 @@ body {
     font-size: 3rem !important;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .display-6 {
     font-size: 2.5rem;
+}
+
+/* Results cards */
+.result-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    color: #212529;
+}
+
+.result-card .card-header {
+    color: white;
+    font-weight: 600;
+}
+
+.result-card .card-body {
+    color: #212529;
+}
+
+.result-card .card-body .text-primary {
+    color: #667eea !important;
+}
+
+.result-card .card-body .text-muted {
+    color: #6c757d !important;
+}
+
+/* Stress score card */
+.stress-score-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 250, 0.98));
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    color: #212529;
 }
 
 /* Responsive adjustments */
