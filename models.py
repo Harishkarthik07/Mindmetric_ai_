@@ -29,6 +29,11 @@ class Booking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     session_date = db.Column(db.Date, nullable=False)
     session_time = db.Column(db.Time, nullable=False)
+    consultation_type = db.Column(db.String(50), nullable=False, default='video')  # 'video' or 'in-person'
+    phone_number = db.Column(db.String(20), nullable=False)
+    emergency_contact = db.Column(db.String(100), nullable=True)
     status = db.Column(db.String(20), default='confirmed')
     notes = db.Column(db.Text, nullable=True)
+    notification_sent = db.Column(db.Boolean, default=False)
+    psychologist_notified = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

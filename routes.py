@@ -152,9 +152,18 @@ def booking():
 @login_required
 def submit_booking():
     try:
+        # Get form data
         session_date = datetime.strptime(request.form['date'], '%Y-%m-%d').date()
         session_time = datetime.strptime(request.form['time'], '%H:%M').time()
+        consultation_type = request.form.get('consultation_type', 'video')
+        phone_number = request.form.get('phone', '')
+        emergency_contact = request.form.get('emergency_contact', '')
         notes = request.form.get('notes', '')
+        
+        # Validate required fields
+        if not phone_number:
+            flash('Phone number is required for booking confirmation.', 'error')
+            return redirect(url_for('booking'))
         
         # Check if slot is already booked
         existing_booking = Booking.query.filter_by(
@@ -171,16 +180,42 @@ def submit_booking():
             user_id=current_user.id,
             session_date=session_date,
             session_time=session_time,
+            consultation_type=consultation_type,
+            phone_number=phone_number,
+            emergency_contact=emergency_contact,
             notes=notes
         )
         
         db.session.add(booking)
         db.session.commit()
         
-        flash('Your session has been booked successfully!', 'success')
+        # Send notifications
+        try:
+            from notification_service import send_booking_notifications
+            notification_results = send_booking_notifications(booking, current_user)
+            
+            # Update booking notification status
+            booking.notification_sent = notification_results['whatsapp'] or notification_results['email']
+            booking.psychologist_notified = notification_results['psychologist']
+            db.session.commit()
+            
+            # Flash success message based on notification results
+            success_msg = 'Your session has been booked successfully!'
+            if notification_results['whatsapp']:
+                success_msg += ' WhatsApp confirmation sent.'
+            if notification_results['email']:
+                success_msg += ' Email confirmation sent.'
+            
+            flash(success_msg, 'success')
+            
+        except Exception as notification_error:
+            app.logger.error(f"Notification error: {notification_error}")
+            flash('Your session has been booked successfully! Confirmation notifications may be delayed.', 'warning')
+        
         return redirect(url_for('booking_confirmation', booking_id=booking.id))
         
     except Exception as e:
+        db.session.rollback()
         app.logger.error(f"Error processing booking: {str(e)}")
         flash('An error occurred while booking your session. Please try again.', 'error')
         return redirect(url_for('booking'))

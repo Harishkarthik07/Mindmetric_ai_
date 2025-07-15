@@ -5,46 +5,75 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="card">
+        <div class="card booking-card">
             <div class="card-body text-center">
                 <div class="mb-4">
-                    <i class="bi bi-check-circle-fill text-success display-1"></i>
+                    <div class="success-animation">
+                        <i class="bi bi-check-circle-fill text-success display-1"></i>
+                    </div>
                 </div>
                 
-                <h1 class="text-success mb-3">Booking Confirmed!</h1>
-                <p class="lead">Your psychology session has been successfully scheduled.</p>
+                <h1 class="text-success mb-3">🎉 Booking Confirmed!</h1>
+                <p class="lead text-dark">Your psychology session has been successfully scheduled.</p>
                 
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card bg-light">
+                    <div class="col-md-10">
+                        <div class="card bg-gradient-light shadow-sm border-0">
                             <div class="card-body">
-                                <h5 class="card-title">Session Details</h5>
-                                <div class="row">
+                                <h5 class="card-title text-primary">📋 Session Details</h5>
+                                <div class="row g-3">
                                     <div class="col-sm-6">
-                                        <strong>Date:</strong><br>
-                                        {{ booking.session_date.strftime('%A, %B %d, %Y') }}
+                                        <div class="detail-box">
+                                            <i class="bi bi-calendar3 text-primary mb-2"></i>
+                                            <strong class="d-block">Date</strong>
+                                            <span class="text-muted">{{ booking.session_date.strftime('%A, %B %d, %Y') }}</span>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <strong>Time:</strong><br>
-                                        {{ booking.session_time.strftime('%I:%M %p') }}
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <strong>Psychologist:</strong><br>
-                                        Meghana KS
+                                        <div class="detail-box">
+                                            <i class="bi bi-clock text-primary mb-2"></i>
+                                            <strong class="d-block">Time</strong>
+                                            <span class="text-muted">{{ booking.session_time.strftime('%I:%M %p') }}</span>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <strong>Duration:</strong><br>
-                                        50 minutes
+                                        <div class="detail-box">
+                                            <i class="bi bi-person-badge text-primary mb-2"></i>
+                                            <strong class="d-block">Psychologist</strong>
+                                            <span class="text-muted">Meghana KS</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-{{ 'camera-video' if booking.consultation_type == 'video' else 'geo-alt' }} text-primary mb-2"></i>
+                                            <strong class="d-block">Session Type</strong>
+                                            <span class="text-muted">{{ booking.consultation_type.title() }}</span>
+                                        </div>
+                                    </div>
+                                    {% if booking.phone_number %}
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-phone text-primary mb-2"></i>
+                                            <strong class="d-block">Contact</strong>
+                                            <span class="text-muted">{{ booking.phone_number }}</span>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-clock-history text-primary mb-2"></i>
+                                            <strong class="d-block">Duration</strong>
+                                            <span class="text-muted">50 minutes</span>
+                                        </div>
                                     </div>
                                 </div>
                                 {% if booking.notes %}
-                                <hr>
-                                <div>
-                                    <strong>Your Notes:</strong><br>
-                                    <em>{{ booking.notes }}</em>
+                                <hr class="my-3">
+                                <div class="text-start">
+                                    <strong class="text-primary">📝 Your Notes:</strong>
+                                    <div class="bg-light p-3 rounded mt-2">
+                                        <em class="text-muted">{{ booking.notes }}</em>
+                                    </div>
                                 </div>
                                 {% endif %}
                             </div>

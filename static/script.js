@@ -231,6 +231,106 @@ function checkPasswordStrength(password) {
     return strength;
 }
 
+// AI Summary formatting and interaction
+function formatAISummary() {
+    const rawSummary = document.getElementById('raw-summary');
+    const summaryContent = document.getElementById('ai-summary-content');
+    
+    if (!rawSummary || !summaryContent) return;
+    
+    let text = rawSummary.textContent.trim();
+    
+    // Format the summary into sections
+    const sections = text.split('\n\n');
+    let formattedHTML = '';
+    
+    sections.forEach(section => {
+        section = section.trim();
+        if (!section) return;
+        
+        // Check if it's a heading (starts with capital and has fewer than 100 chars)
+        if (section.length < 100 && section.charAt(0) === section.charAt(0).toUpperCase() && !section.includes('.')) {
+            formattedHTML += `<h4>${section}</h4>`;
+        } else {
+            // Check if it contains bullet points
+            if (section.includes('•') || section.includes('-')) {
+                const lines = section.split('\n');
+                let ulContent = '';
+                let inList = false;
+                
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (line.startsWith('•') || line.startsWith('-')) {
+                        if (!inList) {
+                            if (ulContent) formattedHTML += `<p>${ulContent}</p>`;
+                            ulContent = '';
+                            inList = true;
+                            formattedHTML += '<ul>';
+                        }
+                        formattedHTML += `<li>${line.substring(1).trim()}</li>`;
+                    } else if (line) {
+                        if (inList) {
+                            formattedHTML += '</ul>';
+                            inList = false;
+                        }
+                        ulContent += line + ' ';
+                    }
+                });
+                
+                if (inList) formattedHTML += '</ul>';
+                if (ulContent.trim()) formattedHTML += `<p>${ulContent.trim()}</p>`;
+            } else {
+                formattedHTML += `<div class="summary-section"><p>${section}</p></div>`;
+            }
+        }
+    });
+    
+    summaryContent.innerHTML = formattedHTML || text;
+}
+
+function toggleSummaryView() {
+    const content = document.getElementById('ai-summary-content');
+    const icon = document.getElementById('toggle-icon');
+    const text = document.getElementById('toggle-text');
+    const rawSummary = document.getElementById('raw-summary');
+    
+    if (!content || !icon || !text || !rawSummary) return;
+    
+    if (content.classList.contains('detailed-view')) {
+        // Switch to formatted view
+        formatAISummary();
+        content.classList.remove('detailed-view');
+        icon.className = 'bi bi-eye';
+        text.textContent = 'Show Detailed View';
+    } else {
+        // Switch to raw view
+        content.innerHTML = `<div class="detailed-view"><pre>${rawSummary.textContent}</pre></div>`;
+        content.classList.add('detailed-view');
+        icon.className = 'bi bi-eye-slash';
+        text.textContent = 'Show Formatted View';
+    }
+}
+
+// Booking page functionality
+function selectConsultationType(type) {
+    // Remove selected class from all options
+    document.querySelectorAll('.consultation-type').forEach(el => {
+        el.classList.remove('selected');
+    });
+    
+    // Add selected class to clicked option
+    document.getElementById(type + '-option').classList.add('selected');
+    
+    // Check the corresponding radio button
+    document.getElementById(type + '-radio').checked = true;
+    
+    // Update the hidden input for form submission
+    const hiddenInput = document.getElementById('consultation_type_input');
+    if (hiddenInput) {
+        hiddenInput.value = type;
+    }
+}
+
 // Initialize password strength checker if password field exists
 const passwordInput = document.getElementById('password');
 if (passwordInput) {
@@ -270,3 +370,12 @@ if (passwordInput) {
         strengthDiv.innerHTML = `<small class="${strengthClass}">Password strength: ${strengthText}</small>`;
     });
 }
+
+// Initialize all functionality when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeQuizProgress();
+    initializeFormValidation();
+    initializeDateRestrictions();
+    initializeAnimations();
+    formatAISummary(); // Format AI summary on results page
+});
