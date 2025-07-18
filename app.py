@@ -1,33 +1,38 @@
-import os
-import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
+import os
+import logging
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
+# Define base for models
 class Base(DeclarativeBase):
     pass
 
+# Initialize extensions
 db = SQLAlchemy(model_class=Base)
+migrate = Migrate()
 
-# Create the app
+# Create app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "fallback-secret-key-for-development")
+app.secret_key = os.environ.get("SESSION_SECRET", "fallback-secret-key")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-# Configure the database
+# Configure database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///mindmetric.db")
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
 }
+logging.basicConfig(level=logging.DEBUG)
 
-# Initialize extensions
+# Attach app to extensions
 db.init_app(app)
+migrate.init_app(app, db)
+
+# Login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -38,10 +43,8 @@ def load_user(user_id):
     from models import User
     return User.query.get(int(user_id))
 
+# Import models and routes
 with app.app_context():
-    # Import models and routes
     import models
     import routes
-    
-    # Create all tables
-    db.create_all()
+
