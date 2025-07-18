@@ -50,14 +50,14 @@ def create_psychological_prompt(responses, stress_score, age):
     PERSONALITY/BEHAVIORAL PATTERNS:
     Based on 10 personality questions, the user showed varied responses indicating their current mental state and coping mechanisms.
 
-    Please provide a personalized analysis including:
+    Please provide a personalized analysis , each in new line, including:
     1. Current Mental State Assessment
     2. Stress Management Insights
     3. Behavioral Patterns Observed
     4. Personalized Recommendations for Improvement
     5. Coping Strategies Tailored to Their Profile
 
-    Keep the tone professional yet empathetic, and provide actionable insights that can help improve their mental wellness.
+    Keep the tone professional yet empathetic, and provide actionable insights that can help improve their mental wellness. Ensure the format is clear and concise , no unnecessary symbols , emojis or special charcaters 
     Limit the response to 300-400 words.
     """
     
