@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmation - MindMetric AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card booking-card">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <div class="success-animation">
+                        <i class="bi bi-check-circle-fill text-success display-1"></i>
+                    </div>
+                </div>
+                
+                <h1 class="text-success mb-3">🎉 Booking Confirmed!</h1>
+                <p class="lead text-dark">Your psychology session has been successfully scheduled.</p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card bg-gradient-light shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">📋 Session Details</h5>
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-calendar3 text-primary mb-2"></i>
+                                            <strong class="d-block">Date</strong>
+                                            <span class="text-muted">{{ booking.session_date.strftime('%A, %B %d, %Y') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-clock text-primary mb-2"></i>
+                                            <strong class="d-block">Time</strong>
+                                            <span class="text-muted">{{ booking.session_time.strftime('%I:%M %p') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-person-badge text-primary mb-2"></i>
+                                            <strong class="d-block">Psychologist</strong>
+                                            <span class="text-muted">Meghana KS</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-{{ 'camera-video' if booking.consultation_type == 'video' else 'geo-alt' }} text-primary mb-2"></i>
+                                            <strong class="d-block">Session Type</strong>
+                                            <span class="text-muted">{{ booking.consultation_type.title() }}</span>
+                                        </div>
+                                    </div>
+                                    {% if booking.phone_number %}
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-phone text-primary mb-2"></i>
+                                            <strong class="d-block">Contact</strong>
+                                            <span class="text-muted">{{ booking.phone_number }}</span>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-sm-6">
+                                        <div class="detail-box">
+                                            <i class="bi bi-clock-history text-primary mb-2"></i>
+                                            <strong class="d-block">Duration</strong>
+                                            <span class="text-muted">50 minutes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if booking.notes %}
+                                <hr class="my-3">
+                                <div class="text-start">
+                                    <strong class="text-primary">📝 Your Notes:</strong>
+                                    <div class="bg-light p-3 rounded mt-2">
+                                        <em class="text-muted">{{ booking.notes }}</em>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4">
+                    <h6><i class="bi bi-info-circle me-2"></i>What's Next?</h6>
+                    <ul class="text-start mb-0">
+                        <li>You will receive a confirmation email with session details</li>
+                        <li>A calendar invite will be sent to your registered email</li>
+                        <li>You'll receive a reminder 24 hours before your session</li>
+                        <li>Session link (for video calls) will be provided closer to the date</li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-warning mt-3">
+                    <h6><i class="bi bi-exclamation-triangle me-2"></i>Important Reminders</h6>
+                    <ul class="text-start mb-0">
+                        <li>Please arrive 5 minutes early for your session</li>
+                        <li>Cancellations require 24-hour notice</li>
+                        <li>Session fee: $120 (payment details will be provided separately)</li>
+                        <li>Contact us if you need to reschedule</li>
+                    </ul>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{{ url_for('quiz') }}" class="btn btn-primary me-2">
+                        <i class="bi bi-clipboard-check me-2"></i>Take Another Assessment
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-house me-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Contact Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>For session inquiries:</h6>
+                        <p class="text-muted">
+                            <i class="bi bi-envelope me-2"></i>meghana.ks@mindmetric.ai<br>
+                            <i class="bi bi-telephone me-2"></i>+1 (555) 123-4567
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Office hours:</h6>
+                        <p class="text-muted">
+                            Monday - Friday: 9:00 AM - 6:00 PM<br>
+                            Saturday: 10:00 AM - 4:00 PM<br>
+                            Sunday: Closed
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

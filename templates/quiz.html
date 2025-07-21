@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block title %}Psychological Assessment - MindMetric AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card quiz-card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <i class="bi bi-clipboard-check text-white me-2"></i>
+                    Psychological Assessment
+                </h2>
+                <p class="text-white-50 mb-0">Complete this 15-question assessment to get personalized insights</p>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('submit_quiz') }}" id="quizForm">
+                    <!-- Progress Bar -->
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar"></div>
+                    </div>
+
+                    <!-- Personality/Stress Questions (1-10) -->
+                    <div class="mb-4">
+                        <h4 class="text-dark-readable">Part 1: Personality & Stress Indicators</h4>
+                        <p class="text-dark-readable">Choose the option that best describes you:</p>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">1. How do you typically handle stressful situations?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="A" required>
+                                <label class="form-check-label">I stay calm and think through solutions systematically</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="B">
+                                <label class="form-check-label">I take a step back and seek advice from others</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="C">
+                                <label class="form-check-label">I feel overwhelmed but eventually work through it</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="D">
+                                <label class="form-check-label">I tend to avoid the situation until I must deal with it</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="E">
+                                <label class="form-check-label">I become very anxious and have trouble focusing</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">2. How would you describe your social interactions?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="A" required>
+                                <label class="form-check-label">I enjoy meeting new people and feel energized by social events</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="B">
+                                <label class="form-check-label">I'm comfortable in small groups but prefer familiar faces</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="C">
+                                <label class="form-check-label">I enjoy socializing but need time alone to recharge</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="D">
+                                <label class="form-check-label">I prefer solitude and find large groups draining</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="E">
+                                <label class="form-check-label">I often feel anxious or uncomfortable in social situations</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">3. How do you approach major life decisions?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" value="A" required>
+                                <label class="form-check-label">I research thoroughly and make detailed plans</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" value="B">
+                                <label class="form-check-label">I consider options carefully and seek trusted advice</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" value="C">
+                                <label class="form-check-label">I weigh pros and cons but sometimes struggle to decide</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" value="D">
+                                <label class="form-check-label">I tend to procrastinate and delay making decisions</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" value="E">
+                                <label class="form-check-label">I feel paralyzed by choices and often avoid deciding</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">4. How do you handle criticism or feedback?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" value="A" required>
+                                <label class="form-check-label">I welcome it as an opportunity to grow and improve</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" value="B">
+                                <label class="form-check-label">I listen carefully and try to learn from it</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" value="C">
+                                <label class="form-check-label">I initially feel hurt but eventually see the value</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" value="D">
+                                <label class="form-check-label">I tend to take it personally and feel defensive</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" value="E">
+                                <label class="form-check-label">I feel deeply hurt and dwell on it for a long time</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">5. How do you manage your daily responsibilities?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" value="A" required>
+                                <label class="form-check-label">I'm highly organized and rarely miss deadlines</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" value="B">
+                                <label class="form-check-label">I manage well with some planning and reminders</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" value="C">
+                                <label class="form-check-label">I get things done but sometimes feel overwhelmed</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" value="D">
+                                <label class="form-check-label">I often procrastinate and work under pressure</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" value="E">
+                                <label class="form-check-label">I frequently feel behind and struggle to keep up</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">6. How do you typically express emotions?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q6" value="A" required>
+                                <label class="form-check-label">I express emotions openly and appropriately</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q6" value="B">
+                                <label class="form-check-label">I share with close friends and family when needed</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q6" value="C">
+                                <label class="form-check-label">I sometimes struggle to express what I'm feeling</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q6" value="D">
+                                <label class="form-check-label">I tend to keep emotions to myself</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q6" value="E">
+                                <label class="form-check-label">I have difficulty identifying and expressing emotions</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">7. How do you approach new challenges?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q7" value="A" required>
+                                <label class="form-check-label">I'm excited by challenges and see them as opportunities</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q7" value="B">
+                                <label class="form-check-label">I feel confident I can handle most situations</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q7" value="C">
+                                <label class="form-check-label">I feel nervous but usually work through it</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q7" value="D">
+                                <label class="form-check-label">I tend to worry about potential problems</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q7" value="E">
+                                <label class="form-check-label">I feel overwhelmed and often avoid new challenges</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">8. How would you describe your sleep patterns?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q8" value="A" required>
+                                <label class="form-check-label">I have a regular sleep schedule and sleep well</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q8" value="B">
+                                <label class="form-check-label">I generally sleep well with occasional restless nights</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q8" value="C">
+                                <label class="form-check-label">I have some trouble falling asleep or staying asleep</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q8" value="D">
+                                <label class="form-check-label">I often have difficulty sleeping and wake up tired</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q8" value="E">
+                                <label class="form-check-label">I have chronic sleep problems and insomnia</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">9. How do you handle change in your life?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q9" value="A" required>
+                                <label class="form-check-label">I embrace change and adapt quickly</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q9" value="B">
+                                <label class="form-check-label">I adjust well after an initial adjustment period</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q9" value="C">
+                                <label class="form-check-label">I find change challenging but eventually manage</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q9" value="D">
+                                <label class="form-check-label">I resist change and prefer familiar routines</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q9" value="E">
+                                <label class="form-check-label">Change causes me significant anxiety and distress</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">10. How do you maintain your physical health?</label>
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q10" value="A" required>
+                                <label class="form-check-label">I maintain regular exercise and healthy eating habits</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q10" value="B">
+                                <label class="form-check-label">I try to stay active and eat well most of the time</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q10" value="C">
+                                <label class="form-check-label">I'm aware of health needs but inconsistent with habits</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q10" value="D">
+                                <label class="form-check-label">I struggle to maintain healthy habits consistently</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q10" value="E">
+                                <label class="form-check-label">I have difficulty managing my physical health</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Stress Level Questions (11-15) -->
+                    <div class="mb-4">
+                        <h4 class="text-dark-readable">Part 2: Current Stress Levels</h4>
+                        <p class="text-dark-readable">Rate your current stress level in these areas:</p>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">11. Work/School-related stress:</label>
+                        <div class="ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q11" value="Low" required>
+                                <label class="form-check-label text-success">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q11" value="Medium">
+                                <label class="form-check-label text-warning">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q11" value="High">
+                                <label class="form-check-label text-danger">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">12. Relationship stress:</label>
+                        <div class="ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q12" value="Low" required>
+                                <label class="form-check-label text-success">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q12" value="Medium">
+                                <label class="form-check-label text-warning">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q12" value="High">
+                                <label class="form-check-label text-danger">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">13. Financial stress:</label>
+                        <div class="ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q13" value="Low" required>
+                                <label class="form-check-label text-success">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q13" value="Medium">
+                                <label class="form-check-label text-warning">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q13" value="High">
+                                <label class="form-check-label text-danger">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">14. Health-related stress:</label>
+                        <div class="ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q14" value="Low" required>
+                                <label class="form-check-label text-success">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q14" value="Medium">
+                                <label class="form-check-label text-warning">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q14" value="High">
+                                <label class="form-check-label text-danger">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group mb-4">
+                        <label class="form-label fw-bold">15. General life stress:</label>
+                        <div class="ms-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q15" value="Low" required>
+                                <label class="form-check-label text-success">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q15" value="Medium">
+                                <label class="form-check-label text-warning">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q15" value="High">
+                                <label class="form-check-label text-danger">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-cpu me-2"></i>Get My AI-Powered Analysis
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
