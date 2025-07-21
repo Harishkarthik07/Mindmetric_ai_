@@ -45,6 +45,7 @@ def load_user(user_id):
 
 # Import models and routes
 with app.app_context():
+    db.create_all()
     import models
     import routes
 
