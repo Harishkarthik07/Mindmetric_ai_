@@ -235,8 +235,8 @@ def notify_psychologist(booking_data):
         """
         
         message = Mail(
-            from_email='system@mindmetric.ai',
-            to_emails='meghana@mindmetric.ai',  # Psychologist's email
+            from_email='harishkarthik095@gmail.com',
+            to_emails='rhak19is@cmrit.ac.in',  # Psychologist's email
             subject=f'New Booking Alert - {booking_data["session_date"].strftime("%B %d, %Y")}',
             html_content=html_content
         )
