@@ -21,9 +21,9 @@ def send_whatsapp_notification(to_phone, user_name, session_date, session_time, 
         if not all([TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER]):
             logging.warning("Twilio credentials not configured")
             return False
-            
+
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-        
+
         # Format message
         message_body = f"""
 🌟 *MindMetric AI - Booking Confirmed* 🌟
@@ -46,17 +46,17 @@ Thank you for choosing MindMetric AI for your mental wellness journey! 💚
 
 _This is an automated message. Reply STOP to opt out._
         """.strip()
-        
+
         # Send WhatsApp message
         message = client.messages.create(
             body=message_body,
             from_=f'whatsapp:{TWILIO_PHONE_NUMBER}',
             to=f'whatsapp:{to_phone}'
         )
-        
+
         logging.info(f"WhatsApp notification sent successfully. SID: {message.sid}")
         return True
-        
+
     except Exception as e:
         logging.error(f"Failed to send WhatsApp notification: {e}")
         return False
@@ -67,9 +67,9 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
         if not SENDGRID_API_KEY:
             logging.warning("SendGrid API key not configured")
             return False
-            
+
         sg = SendGridAPIClient(SENDGRID_API_KEY)
-        
+
         # HTML email template
         html_content = f"""
         <!DOCTYPE html>
@@ -92,11 +92,11 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
                 <h1>🌟 Booking Confirmed!</h1>
                 <p>Your psychology session at MindMetric AI</p>
             </div>
-            
+
             <div class="content">
                 <p>Dear {user_name},</p>
                 <p>Thank you for booking your psychology session with MindMetric AI. We're excited to support you on your mental wellness journey!</p>
-                
+
                 <div class="booking-details">
                     <h3>📋 Session Details</h3>
                     <div class="detail-item">
@@ -116,11 +116,11 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
                         <span class="value">Meghana KS, Licensed Clinical Psychologist</span>
                     </div>
                 </div>
-                
+
                 <div class="highlight">
                     {"<h4>📞 Video Call Instructions</h4><p>You will receive a secure video call link 30 minutes before your session. Please ensure you have a stable internet connection and a quiet environment.</p>" if consultation_type == 'video' else "<h4>🏥 In-Person Session</h4><p><strong>Location:</strong> MindMetric AI Clinic<br>Bangalore, India<br><br>Please arrive 5 minutes early for check-in.</p>"}
                 </div>
-                
+
                 <h4>📝 Important Reminders:</h4>
                 <ul>
                     <li>Please arrive 5 minutes early</li>
@@ -128,15 +128,15 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
                     <li>Contact us at least 24 hours in advance if you need to reschedule</li>
                     <li>Ensure privacy and minimal distractions during the session</li>
                 </ul>
-                
+
                 <p>If you have any questions or need to make changes to your appointment, please contact us immediately.</p>
-                
+
                 <p>We look forward to supporting your mental wellness journey!</p>
-                
+
                 <p>Warm regards,<br>
                 <strong>The MindMetric AI Team</strong></p>
             </div>
-            
+
             <div class="footer">
                 <p>MindMetric AI - Your Mental Wellness Partner</p>
                 <p>This is an automated confirmation email.</p>
@@ -144,33 +144,33 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
         </body>
         </html>
         """
-        
+
         # Plain text version
         text_content = f"""
         MindMetric AI - Booking Confirmed!
-        
+
         Dear {user_name},
-        
+
         Your psychology session has been successfully booked:
-        
+
         Date: {session_date.strftime('%A, %B %d, %Y')}
         Time: {session_time.strftime('%I:%M %p')}
         Type: {consultation_type.title()}
         Psychologist: Meghana KS
-        
+
         {"Video call link will be sent 30 minutes before your session." if consultation_type == 'video' else "Location: MindMetric AI Clinic, Bangalore"}
-        
+
         Important reminders:
         - Arrive 5 minutes early
         - Bring relevant documents
         - Contact us for rescheduling
-        
+
         Thank you for choosing MindMetric AI!
-        
+
         Best regards,
         The MindMetric AI Team
         """
-        
+
         message = Mail(
             from_email='noreply@mindmetric.ai',
             to_emails=to_email,
@@ -178,11 +178,11 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
             html_content=html_content,
             plain_text_content=text_content
         )
-        
+
         response = sg.send(message)
         logging.info(f"Email notification sent successfully. Status: {response.status_code}")
         return True
-        
+
     except Exception as e:
         logging.error(f"Failed to send email notification: {e}")
         return False
@@ -193,9 +193,9 @@ def notify_psychologist(booking_data):
         if not SENDGRID_API_KEY:
             logging.warning("SendGrid API key not configured")
             return False
-            
+
         sg = SendGridAPIClient(SENDGRID_API_KEY)
-        
+
         html_content = f"""
         <!DOCTYPE html>
         <html>
@@ -214,7 +214,7 @@ def notify_psychologist(booking_data):
             <div class="content">
                 <p>Dear Meghana,</p>
                 <p>A new psychology session has been booked through MindMetric AI.</p>
-                
+
                 <div class="booking-info">
                     <h3>Booking Details:</h3>
                     <p><strong>Patient:</strong> {booking_data['user_name']}</p>
@@ -225,26 +225,26 @@ def notify_psychologist(booking_data):
                     <p><strong>Type:</strong> {booking_data['consultation_type'].title()}</p>
                     <p><strong>Booking ID:</strong> #{booking_data['booking_id']}</p>
                 </div>
-                
+
                 <p>Please prepare for the session and confirm your availability.</p>
-                
+
                 <p>Best regards,<br>MindMetric AI System</p>
             </div>
         </body>
         </html>
         """
-        
+
         message = Mail(
             from_email='system@mindmetric.ai',
             to_emails='meghana@mindmetric.ai',  # Psychologist's email
             subject=f'New Booking Alert - {booking_data["session_date"].strftime("%B %d, %Y")}',
             html_content=html_content
         )
-        
+
         response = sg.send(message)
         logging.info(f"Psychologist notification sent successfully. Status: {response.status_code}")
         return True
-        
+
     except Exception as e:
         logging.error(f"Failed to send psychologist notification: {e}")
         return False
@@ -256,7 +256,7 @@ def send_booking_notifications(booking, user):
         'email': False,
         'psychologist': False
     }
-    
+
     # Send WhatsApp notification to user
     if booking.phone_number:
         results['whatsapp'] = send_whatsapp_notification(
@@ -266,7 +266,7 @@ def send_booking_notifications(booking, user):
             booking.session_time,
             booking.consultation_type
         )
-    
+
     # Send email notification to user
     results['email'] = send_email_notification(
         user.email,
@@ -275,7 +275,7 @@ def send_booking_notifications(booking, user):
         booking.session_time,
         booking.consultation_type
     )
-    
+
     # Send notification to psychologist
     booking_data = {
         'user_name': user.name,
@@ -287,5 +287,5 @@ def send_booking_notifications(booking, user):
         'booking_id': booking.id
     }
     results['psychologist'] = notify_psychologist(booking_data)
-    
+
     return results

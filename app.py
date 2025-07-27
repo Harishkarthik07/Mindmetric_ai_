@@ -43,8 +43,8 @@ def load_user(user_id):
     from models import User
     return User.query.get(int(user_id))
 
-# Import models and routes
+# ✅ Import models BEFORE calling db.create_all
 with app.app_context():
-    import models
+    import models  # now SQLAlchemy knows about your tables
+    db.create_all()
     import routes
-
