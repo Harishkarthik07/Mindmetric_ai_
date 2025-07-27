@@ -172,7 +172,7 @@ def send_email_notification(to_email, user_name, session_date, session_time, con
         """
         
         message = Mail(
-            from_email='noreply@mindmetric.ai',
+            from_email='harishkarthik095@gmail.com',
             to_emails=to_email,
             subject=f'Booking Confirmed - {session_date.strftime("%B %d, %Y")} at {session_time.strftime("%I:%M %p")}',
             html_content=html_content,
