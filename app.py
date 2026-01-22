@@ -21,7 +21,12 @@ app.secret_key = os.environ.get("SESSION_SECRET", "fallback-secret-key")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Configure database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///mindmetric.db")
+db_url = os.getenv("DATABASE_URL")
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_recycle": 300,
     "pool_pre_ping": True,
@@ -43,8 +48,6 @@ def load_user(user_id):
     from models import User
     return User.query.get(int(user_id))
 
-# ✅ Import models BEFORE calling db.create_all
-with app.app_context():
-    import models  # now SQLAlchemy knows about your tables
-    db.create_all()
-    import routes
+# ✅ Import models
+import models  # now SQLAlchemy knows about your tables
+import routes
